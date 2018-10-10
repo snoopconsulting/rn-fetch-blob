@@ -1,7 +1,7 @@
 {
   "name": "rn-fetch-blob",
-  "version": "0.10.13",
-  "description": "A module provides upload, download, and files access API. Supports file stream read/write for process large files.",
+  "version": "0.10.13-snoop",
+  "description": "fixes para correr con expo. A module provides upload, download, and files access API. Supports file stream read/write for process large files.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
