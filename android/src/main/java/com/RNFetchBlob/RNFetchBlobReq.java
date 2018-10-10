@@ -51,18 +51,18 @@ import java.util.concurrent.TimeUnit;
 
 import 	javax.net.ssl.SSLSocketFactory;
 
-import okhttp3.Call;
-import okhttp3.ConnectionPool;
-import okhttp3.ConnectionSpec;
-import okhttp3.Headers;
-import okhttp3.Interceptor;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
-import okhttp3.TlsVersion;
+import expolib_v1.okhttp3.Call;
+import expolib_v1.okhttp3.ConnectionPool;
+import expolib_v1.okhttp3.ConnectionSpec;
+import expolib_v1.okhttp3.Headers;
+import expolib_v1.okhttp3.Interceptor;
+import expolib_v1.okhttp3.MediaType;
+import expolib_v1.okhttp3.OkHttpClient;
+import expolib_v1.okhttp3.Request;
+import expolib_v1.okhttp3.RequestBody;
+import expolib_v1.okhttp3.Response;
+import expolib_v1.okhttp3.ResponseBody;
+import expolib_v1.okhttp3.TlsVersion;
 
 
 public class RNFetchBlobReq extends BroadcastReceiver implements Runnable {
@@ -110,9 +110,9 @@ public class RNFetchBlobReq extends BroadcastReceiver implements Runnable {
     WritableMap respInfo;
     boolean timeout = false;
     ArrayList<String> redirects = new ArrayList<>();
-    OkHttpClient client;
+    expolib_v1.okhttp3.OkHttpClient client;
 
-    public RNFetchBlobReq(ReadableMap options, String taskId, String method, String url, ReadableMap headers, String body, ReadableArray arrayBody, OkHttpClient client, final Callback callback) {
+    public RNFetchBlobReq(ReadableMap options, String taskId, String method, String url, ReadableMap headers, String body, ReadableArray arrayBody, expolib_v1.okhttp3.OkHttpClient client, final Callback callback) {
         this.method = method.toUpperCase();
         this.options = new RNFetchBlobConfig(options);
         this.taskId = taskId;
@@ -222,7 +222,7 @@ public class RNFetchBlobReq extends BroadcastReceiver implements Runnable {
             this.destPath = RNFetchBlobFS.getTmpPath(cacheKey) + ext;
 
 
-        OkHttpClient.Builder clientBuilder;
+        expolib_v1.okhttp3.OkHttpClient.Builder clientBuilder;
 
         try {
             // use trusty SSL socket
@@ -347,7 +347,7 @@ public class RNFetchBlobReq extends BroadcastReceiver implements Runnable {
                 public Response intercept(@NonNull Chain chain) throws IOException {
                     try {
                         Response originalResponse = chain.proceed(req);
-                        ResponseBody extended;
+                        expolib_v1.okhttp3.ResponseBody extended;
                         switch (responseType) {
                             case KeepInMemory:
                                 extended = new RNFetchBlobDefaultResp(
@@ -399,11 +399,11 @@ public class RNFetchBlobReq extends BroadcastReceiver implements Runnable {
             clientBuilder.followSslRedirects(options.followRedirect);
             clientBuilder.retryOnConnectionFailure(true);
 
-            OkHttpClient client = enableTls12OnPreLollipop(clientBuilder).build();
+            expolib_v1.okhttp3.OkHttpClient client = enableTls12OnPreLollipop(clientBuilder).build();
 
             Call call =  client.newCall(req);
             taskTable.put(taskId, call);
-            call.enqueue(new okhttp3.Callback() {
+            call.enqueue(new expolib_v1.okhttp3.Callback() {
 
                 @Override
                 public void onFailure(@NonNull Call call, IOException e) {
@@ -719,7 +719,7 @@ public class RNFetchBlobReq extends BroadcastReceiver implements Runnable {
         }
     }
 
-    public static OkHttpClient.Builder enableTls12OnPreLollipop(OkHttpClient.Builder client) {
+    public static expolib_v1.okhttp3.OkHttpClient.Builder enableTls12OnPreLollipop(expolib_v1.okhttp3.OkHttpClient.Builder client) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
             try {
                 // Code from https://stackoverflow.com/a/40874952/544779
